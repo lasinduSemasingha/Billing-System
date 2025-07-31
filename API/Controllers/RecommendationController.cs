@@ -42,28 +42,33 @@ namespace API.Controllers
                 return StatusCode(500, new ServiceResponse(false, ex.Message, null));
             }
         }
+
         [HttpPost("recommendations")]
         public async Task<ActionResult<ServiceResponse>> CreateRecommendation([FromBody] AddRecommendationRequest request)
         {
             try
             {
                 var createdRecommendation = await _recommendationService
-                .CreateRecommendationAsync(request.VehicleId, request.PartName, request.Description, request.RecommendedDate, request.Status);
+                .CreateRecommendationAsync(
+                    request.VehicleId, 
+                    request.PartName, 
+                    request.Description, 
+                    request.RecommendedDate, 
+                    request.Status
+                );
 
                 return Ok(new ServiceResponse(true, "Recommendation Added Successfully", createdRecommendation));
             }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(new ServiceResponse(false, ex.Message, null));
-            }
             catch (InvalidOperationException ex)
             {
-                return BadRequest(new ServiceResponse(false, ex.Message, null));
+                return UnprocessableEntity(new ServiceResponse(false, ex.Message, null));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new ServiceResponse(false, ex.Message, null));
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    new ServiceResponse(false, ex.Message, null));
             }
         }
+
     }
 }
