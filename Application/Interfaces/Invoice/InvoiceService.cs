@@ -1,9 +1,4 @@
 ﻿using Application.Interfaces.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Interfaces.Invoice
 {
@@ -71,6 +66,11 @@ namespace Application.Interfaces.Invoice
             var part = await _partRepository.GetPartByIdAsync(partId);
             if (part == null) throw new Exception("Part not found");
 
+            if (part.StockQty < quantity)
+                throw new InvalidOperationException("Not enough stock available");
+
+            part.StockQty -= quantity;
+
             var invoicePart = new Domain.Entities.InvoicePart
             {
                 InvoiceId = invoiceId,
@@ -97,7 +97,6 @@ namespace Application.Interfaces.Invoice
                 throw new Exception("Invoice must have at least one service or part before submitting.");
             }
 
-            // You can add other submit logic (status change, timestamp etc)
             invoice.PaidStatus = true;
 
             await _invoiceRepository.SaveChangesAsync();

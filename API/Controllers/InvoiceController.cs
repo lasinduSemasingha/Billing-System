@@ -10,22 +10,20 @@ namespace API.Controllers
     public class InvoiceController : ControllerBase
     {
         private readonly IInvoiceService _invoiceService;
-        private static int _serviceItemCounter = 1;
-        private static int _partItemCounter = 1;
 
         public InvoiceController(IInvoiceService service)
         {
             _invoiceService = service;
         }
-        // In-memory storage
+        
         private static readonly Dictionary<int, InvoiceResponse> Invoices = new();
 
         [HttpPost]
-        public async Task<IActionResult> CreateInvoice([FromBody] CreateInvoiceRequest request)
+        public async Task<ServiceResponse> CreateInvoice([FromBody] CreateInvoiceRequest request)
         {
             if (request == null || request.VehicleId <= 0)
             {
-                return BadRequest("Invalid request data.");
+                return new ServiceResponse(true, "Invalid request data.", null);
             }
 
             var invoice = await _invoiceService.CreateInvoiceAsync(request.VehicleId, request.DateIssued, request.PaidStatus, request.TotalAmount, request.Notes);
@@ -40,46 +38,80 @@ namespace API.Controllers
                 Notes = invoice.Notes
             };
 
-            return CreatedAtAction(nameof(GetInvoice), new { invoiceId = response.InvoiceId }, response);
+            return new ServiceResponse(true, "Invoice Created Successfully", response);
         }
 
-        //[HttpPost("{invoiceId}/services")]
-        //public IActionResult AddService(int invoiceId, [FromBody] AddServiceRequest request)
-        //{
-        //    if (!Invoices.TryGetValue(invoiceId, out var invoice))
-        //        return NotFound("Invoice not found.");
+        [HttpPost("services")]
+        public async Task<ActionResult<ServiceResponse>> AddService([FromBody] AddServiceRequest request)
+        {
+            try
+            {
+                await _invoiceService.AddServiceToInvoiceAsync(
+                    request.InvoiceId,
+                    request.ServiceId,
+                    request.Quantity,
+                    request.Price
+                );
 
-        //    var serviceItem = new ServiceItemResponse
-        //    {
-        //        Id = _serviceItemCounter++,
-        //        ServiceId = request.ServiceId,
-        //        Description = request.Description,
-        //        Quantity = request.Quantity,
-        //        UnitPrice = request.UnitPrice
-        //    };
+                var serviceItem = new ServiceItemResponse
+                {
+                    ServiceId = request.ServiceId,
+                    InvoiceId = request.InvoiceId,
+                    Quantity = request.Quantity,
+                    Price = request.Price
+                };
 
-        //    invoice.Services.Add(serviceItem);
-        //    return CreatedAtAction(nameof(GetInvoice), new { invoiceId = invoice.InvoiceId }, serviceItem);
-        //}
+                return Ok(new ServiceResponse(true, "Service added successfully", serviceItem));
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new ServiceResponse(false, ex.Message, null));
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new ServiceResponse(false, ex.Message, null));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ServiceResponse(false, ex.Message, null));
+            }
+        }
 
-        //[HttpPost("{invoiceId}/parts")]
-        //public IActionResult AddPart(int invoiceId, [FromBody] AddPartRequest request)
-        //{
-        //    if (!Invoices.TryGetValue(invoiceId, out var invoice))
-        //        return NotFound("Invoice not found.");
 
-        //    var partItem = new PartItemResponse
-        //    {
-        //        Id = _partItemCounter++,
-        //        PartId = request.PartId,
-        //        Description = request.Description,
-        //        Quantity = request.Quantity,
-        //        UnitPrice = request.UnitPrice
-        //    };
+        [HttpPost("parts")]
+        public async Task<ActionResult<ServiceResponse>> AddPart([FromBody] AddPartRequest request)
+        {
+            try
+            {
+                await _invoiceService.AddPartToInvoiceAsync(
+                    request.InvoiceId,
+                    request.PartId,
+                    request.Quantity,
+                    request.UnitPrice
+                );
+                var partItem = new PartItemResponse
+                {
+                    PartId = request.PartId,
+                    InvoicePartId = request.InvoiceId,
+                    Quantity = request.Quantity,
+                    UnitPrice = request.UnitPrice
+                };
 
-        //    invoice.Parts.Add(partItem);
-        //    return CreatedAtAction(nameof(GetInvoice), new { invoiceId = invoice.InvoiceId }, partItem);
-        //}
+                return Ok(new ServiceResponse(true, "Part added successfully", partItem));
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new ServiceResponse(false, ex.Message, null));
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new ServiceResponse(false, ex.Message, null));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ServiceResponse(false, ex.Message, null));
+            }
+        }
 
         //[HttpPost("{invoiceId}/submit")]
         //public IActionResult SubmitInvoice(int invoiceId)

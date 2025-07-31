@@ -1,17 +1,18 @@
 using Application.Commands.Auth;
 using Application.Interfaces.Auth;
+using Application.Interfaces.Invoice;
+using Application.Interfaces.Recommendation;
+using Application.Interfaces.Repository;
 using Application.Interfaces.User;
+using Domain.Entities;
 using Infrastructure.Data;
+using Infrastructure.Repository;
 using Infrastructure.Repository.User;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using Swashbuckle.AspNetCore;
-using Application.Interfaces.Repository;
-using Infrastructure.Repository;
-using Application.Interfaces.Invoice;
-using Domain.Entities;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,8 +25,10 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IInvoiceRepository, InvoiceRepository>();
 builder.Services.AddScoped<IPartRepository, PartRepository>();
 builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
+builder.Services.AddScoped<IRecommendationRepository, RecommendationRepository>();
 
 // Register your services
+builder.Services.AddScoped<IRecommendationService, Application.Interfaces.Recommendation.RecommendationService>();
 builder.Services.AddScoped<IInvoiceService, Application.Interfaces.Invoice.InvoiceService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddMediatR(cfg =>

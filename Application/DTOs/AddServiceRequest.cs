@@ -8,6 +8,7 @@ namespace Application.DTOs
 {
     public class AddServiceRequest
     {
+        public int InvoiceId { get; set; }
         public int ServiceId { get; set; }
         public int Quantity { get; set; }
         public decimal Price { get; set; }

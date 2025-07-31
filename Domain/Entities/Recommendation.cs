@@ -12,7 +12,7 @@ namespace Domain.Entities
         public string PartName { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public DateTime RecommendedDate { get; set; }
-        public string status { get; set; } = string.Empty;
+        public string Status { get; set; } = string.Empty;
         public Vehicle Vehicle { get; set; }
     }
 }
