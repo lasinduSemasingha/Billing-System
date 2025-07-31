@@ -70,5 +70,27 @@ namespace API.Controllers
             }
         }
 
+        [HttpPatch("recommendations/status")]
+        public async Task<ActionResult<ServiceResponse>> UpdateRecommendationStatus([FromBody] UpdateRecommendationStatusRequest request)
+        {
+            try
+            {
+                await _recommendationService
+                    .UpdateRecommendationStatusAsync(
+                    request.RecommendationId, 
+                    request.Status
+                    );
+
+                return Ok(new ServiceResponse(true, "Status updated successfully"));
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new ServiceResponse(false, ex.Message));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ServiceResponse(false, "An unexpected error occurred"));
+            }
+        }
     }
 }

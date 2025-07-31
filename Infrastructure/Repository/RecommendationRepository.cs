@@ -37,5 +37,15 @@ namespace Infrastructure.Repository
         {
             await _context.SaveChangesAsync();
         }
+        public async Task<Recommendation> GetByIdAsync(int id)
+        {
+            return await _context.Recommendations.FindAsync(id);
+        }
+
+        public async Task UpdateAsync(Recommendation recommendation)
+        {
+            _context.Recommendations.Update(recommendation);
+            await _context.SaveChangesAsync();
+        }
     }
 }

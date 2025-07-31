@@ -11,5 +11,6 @@ namespace Application.Interfaces.Recommendation
     {
         Task<Domain.Entities.Recommendation> CreateRecommendationAsync(int vehicleId, string partName, string description, DateTime recommendedDate, string status);
         Task<Domain.Entities.Recommendation?> GetRecommendationAsync(int recommendationId, int vehicleId);
+        Task UpdateRecommendationStatusAsync(int recommendationId, string newStatus);
     }
 }

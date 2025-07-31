@@ -12,5 +12,7 @@ namespace Application.Interfaces.Repository
         Task CreateRecommendationAsync(Domain.Entities.Recommendation recommendation);
         Task<Domain.Entities.Recommendation?> GetRecommendationAsync(int recommendationId, int vehicleId);
         Task SaveChangesAsync();
+        Task<Domain.Entities.Recommendation> GetByIdAsync(int id);
+        Task UpdateAsync(Domain.Entities.Recommendation recommendation);
     }
 }
