@@ -1,0 +1,85 @@
+## .NET Core / .NET 5+ ##
+bin/
+obj/
+out/
+.vscode/
+.vs/
+*.user
+*.suo
+
+## Build Results ##
+*.exe
+*.dll
+*.app
+*.log
+
+## User-specific files ##
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+## Visual Studio Code ##
+.vscode/
+
+## Rider ##
+.idea/
+*.sln.iml
+
+## ASP.NET Scaffolding ##
+ScaffoldingReadMe.txt
+
+## NuGet Packages ##
+*.nupkg
+*.snupkg
+packages/
+# NuGet v3 folder-based project format
+**/project.lock.json
+**/project.fragment.lock.json
+# Dotnet restore outputs
+project.assets.json
+project.nuget.cache
+*.nuspec
+
+## Entity Framework Core ##
+Migrations/
+
+## Secrets ##
+secrets.json
+*.pfx
+*.key
+
+## Others ##
+*.db
+*.sqlite
+*.mdf
+*.ldf
+
+## Logs ##
+*.log
+
+## Resharper ##
+_ReSharper*/
+*.[Rr]e[Ss]harper
+
+## Test Results ##
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+## ncrunch ##
+*.ncrunch*
+.*crunch*.local.xml
+
+## Sonar ##
+.sonar/
+.nuget/
+
+## Backup & temp files ##
+*.bak
+*.tmp
+*.temp
+*.swp
+*.orig
