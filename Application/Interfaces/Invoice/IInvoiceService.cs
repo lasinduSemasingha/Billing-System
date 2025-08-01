@@ -18,6 +18,5 @@ namespace Application.Interfaces.Invoice
 
         Task<Domain.Entities.Invoice> GetInvoiceAsync(int invoiceId);
 
-        Task<int> GetLatestInvoiceId();
     }
 }

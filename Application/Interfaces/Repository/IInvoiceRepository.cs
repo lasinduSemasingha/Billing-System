@@ -14,6 +14,6 @@ namespace Application.Interfaces.Repository
 
         Task SaveChangesAsync();
 
-        Task<int> GetLatestInvoiceId();
+        Task<string?> GetLastInvoiceNumberAsync();
     }
 }

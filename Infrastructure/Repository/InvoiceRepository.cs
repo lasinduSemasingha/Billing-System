@@ -25,14 +25,12 @@ namespace Infrastructure.Repository
             await _context.Invoices.AddAsync(invoice);
         }
 
-        public async Task<int> GetLatestInvoiceId()
+        public async Task<string?> GetLastInvoiceNumberAsync()
         {
-            var latestId = await _context.Invoices
+            return await _context.Invoices
                 .OrderByDescending(i => i.InvoiceId)
-                .Select(i => i.InvoiceId)
+                .Select(i => i.InvoiceNumber)
                 .FirstOrDefaultAsync();
-
-            return latestId;
         }
 
 

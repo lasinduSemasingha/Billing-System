@@ -15,7 +15,7 @@ namespace API.Controllers
         {
             _invoiceService = service;
         }
-        
+
         private static readonly Dictionary<int, InvoiceResponse> Invoices = new();
 
         [HttpPost]
@@ -139,5 +139,24 @@ namespace API.Controllers
 
             return Ok(invoice);
         }
+
+        [HttpPost("create-full")]
+        public async Task<IActionResult> CreateFullInvoice([FromBody] CreateFullInvoiceRequest request)
+        {
+            var invoice = await _invoiceService.CreateInvoiceAsync(request.VehicleId, request.DateIssued, request.PaidStatus, request.TotalPrice, request.Notes);
+
+            foreach (var part in request.Parts)
+            {
+                await _invoiceService.AddPartToInvoiceAsync(invoice.InvoiceId, part.PartId, part.Quantity, part.UnitPrice);
+            }
+
+            foreach (var service in request.Services)
+            {
+                await _invoiceService.AddServiceToInvoiceAsync(invoice.InvoiceId, service.ServiceId, service.Quantity, service.Price);
+            }
+
+            return Ok(invoice);
+        }
+
     }
 }

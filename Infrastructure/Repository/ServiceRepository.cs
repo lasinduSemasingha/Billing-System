@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.Repository;
+﻿using Application.DTOs;
+using Application.Interfaces.Repository;
 using Domain.Entities;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -21,9 +22,19 @@ namespace Infrastructure.Repository
 
         public async Task<Service> GetServiceByIdAsync(int serviceId)
         {
-            return await _context.Services.FirstOrDefaultAsync(s => s.ServiceId == serviceId);
+            return await _context.Services.FirstOrDefaultAsync(p => p.ServiceId == serviceId);
         }
 
-        // Add more methods if needed, e.g. Add, Update, Delete...
+        public async Task<List<ServiceRequest>> GetAllServicesAsync()
+        {
+            return await _context.Services
+                .Select(p => new ServiceRequest
+                {
+                    ServiceId = p.ServiceId,
+                    ServiceName = p.ServiceName,
+                    ServiceDescription = p.ServiceDescription
+                })
+                .ToListAsync();
+        }
     }
 }

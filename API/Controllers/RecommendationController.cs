@@ -70,7 +70,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpPatch("recommendations/status")]
+        [HttpPatch("status")]
         public async Task<ActionResult<ServiceResponse>> UpdateRecommendationStatus([FromBody] UpdateRecommendationStatusRequest request)
         {
             try

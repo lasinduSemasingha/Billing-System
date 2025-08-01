@@ -19,8 +19,13 @@ namespace Application.Interfaces.Invoice
 
         public async Task<Domain.Entities.Invoice> CreateInvoiceAsync(int vehicleId, DateTime dateIssued, bool paidStatus, decimal totalAmount, string notes)
         {
+            var lastInvoiceNumber = await _invoiceRepository.GetLastInvoiceNumberAsync();
+
+            var newInvoiceNumber = GenerateInvoiceNumber(lastInvoiceNumber);
+
             var invoice = new Domain.Entities.Invoice
             {
+                InvoiceNumber = newInvoiceNumber,
                 VehicleId = vehicleId,
                 DateIssued = dateIssued,
                 PaidStatus = paidStatus,
@@ -32,6 +37,7 @@ namespace Application.Interfaces.Invoice
 
             await _invoiceRepository.AddInvoiceAsync(invoice);
             await _invoiceRepository.SaveChangesAsync();
+
             return invoice;
         }
 
@@ -114,9 +120,19 @@ namespace Application.Interfaces.Invoice
             return await _invoiceRepository.GetInvoiceWithItemsAsync(invoiceId);
         }
 
-        public async Task<int> GetLatestInvoiceId()
+        private string GenerateInvoiceNumber(string? lastInvoiceNumber)
         {
-            return await _invoiceRepository.GetLatestInvoiceId();
+            if (string.IsNullOrEmpty(lastInvoiceNumber))
+                return "INV-00001";
+
+            if (!lastInvoiceNumber.StartsWith("INV-") ||
+                !int.TryParse(lastInvoiceNumber.Replace("INV-", ""), out int lastNumber))
+            {
+                throw new FormatException("Invalid invoice number format.");
+            }
+
+            int nextNumber = lastNumber + 1;
+            return $"INV-{nextNumber:D5}";
         }
 
     }

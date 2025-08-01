@@ -9,6 +9,7 @@ namespace Domain.Entities
         public int InvoiceId {  get; set; }
         [ForeignKey("Vehicle")]
         public int VehicleId { get; set; }
+        public string InvoiceNumber { get; set; } = string.Empty;
         public DateTime DateIssued { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         public decimal TotalAmount { get; set; }

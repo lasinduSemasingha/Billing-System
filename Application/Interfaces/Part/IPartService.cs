@@ -1,16 +1,14 @@
 ﻿using Application.DTOs;
-using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Interfaces.Repository
+namespace Application.Interfaces.Part
 {
-    public interface IPartRepository
+    public interface IPartService
     {
-        Task<Domain.Entities.Part> GetPartByIdAsync(int partId);
         Task<List<PartRequest>> GetAllPartsAsync();
     }
 }
