@@ -17,7 +17,7 @@ namespace Application.Interfaces.Invoice
             _serviceRepository = serviceRepository;
         }
 
-        public async Task<Domain.Entities.Invoice> CreateInvoiceAsync(int vehicleId, DateTime dateIssued, bool paidStatus, decimal totalAmount, string notes)
+        public async Task<Domain.Entities.Invoice> CreateInvoiceAsync(int vehicleId, DateTime dateIssued, bool paidStatus, decimal totalAmount, decimal vatAmount, string notes)
         {
             var lastInvoiceNumber = await _invoiceRepository.GetLastInvoiceNumberAsync();
 
@@ -30,6 +30,7 @@ namespace Application.Interfaces.Invoice
                 DateIssued = dateIssued,
                 PaidStatus = paidStatus,
                 TotalAmount = totalAmount,
+                VatAmount = vatAmount,
                 Notes = notes,
                 InvoiceParts = new List<Domain.Entities.InvoicePart>(),
                 InvoiceServices = new List<Domain.Entities.InvoiceService>()

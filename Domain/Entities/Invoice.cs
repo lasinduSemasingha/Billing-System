@@ -13,6 +13,8 @@ namespace Domain.Entities
         public DateTime DateIssued { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         public decimal TotalAmount { get; set; }
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal VatAmount { get; set; }
         public Boolean PaidStatus { get; set; }
         public string Notes { get; set; } = string.Empty;
         public Vehicle Vehicle { get; set; }

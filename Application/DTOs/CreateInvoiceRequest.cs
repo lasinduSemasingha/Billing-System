@@ -11,6 +11,7 @@ namespace Application.DTOs
         public int VehicleId { get; set; }
         public DateTime DateIssued { get; set; }
         public decimal TotalAmount { get; set; }
+        public decimal VatAmount { get; set; }
         public bool PaidStatus { get; set; }
         public string Notes {  get; set; } = string.Empty;
     }

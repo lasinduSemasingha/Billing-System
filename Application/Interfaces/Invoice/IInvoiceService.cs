@@ -8,7 +8,7 @@ namespace Application.Interfaces.Invoice
 {
     public interface IInvoiceService
     {
-        Task<Domain.Entities.Invoice> CreateInvoiceAsync(int vehicleId, DateTime dateIssued, bool paidStatus, decimal totalAmount, string notes);
+        Task<Domain.Entities.Invoice> CreateInvoiceAsync(int vehicleId, DateTime dateIssued, bool paidStatus, decimal totalAmount, decimal vatAmount, string notes);
 
         Task AddServiceToInvoiceAsync(int invoiceId, int serviceId, int quantity, decimal price);
 

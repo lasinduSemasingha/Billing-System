@@ -26,7 +26,7 @@ namespace API.Controllers
                 return new ServiceResponse(true, "Invalid request data.", null);
             }
 
-            var invoice = await _invoiceService.CreateInvoiceAsync(request.VehicleId, request.DateIssued, request.PaidStatus, request.TotalAmount, request.Notes);
+            var invoice = await _invoiceService.CreateInvoiceAsync(request.VehicleId, request.DateIssued, request.PaidStatus, request.TotalAmount, request.VatAmount, request.Notes);
 
             var response = new InvoiceResponse
             {
@@ -34,6 +34,7 @@ namespace API.Controllers
                 VehicleId = invoice.VehicleId,
                 DateIssued = invoice.DateIssued,
                 TotalAmount = invoice.TotalAmount,
+                VatAmount = invoice.VatAmount,
                 PaidStatus = invoice.PaidStatus,
                 Notes = invoice.Notes
             };
@@ -143,7 +144,7 @@ namespace API.Controllers
         [HttpPost("create-full")]
         public async Task<IActionResult> CreateFullInvoice([FromBody] CreateFullInvoiceRequest request)
         {
-            var invoice = await _invoiceService.CreateInvoiceAsync(request.VehicleId, request.DateIssued, request.PaidStatus, request.TotalPrice, request.Notes);
+            var invoice = await _invoiceService.CreateInvoiceAsync(request.VehicleId, request.DateIssued, request.PaidStatus, request.TotalPrice, request.VatAmount, request.Notes);
 
             foreach (var part in request.Parts)
             {

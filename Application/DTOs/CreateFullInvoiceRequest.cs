@@ -12,6 +12,7 @@ namespace Application.DTOs
         public DateTime DateIssued { get; set; }
         public bool PaidStatus { get; set; }
         public decimal TotalPrice { get; set; }
+        public decimal VatAmount { get; set; }
         public string Notes { get; set; }
 
         public List<InvoicePartDto> Parts { get; set; }
