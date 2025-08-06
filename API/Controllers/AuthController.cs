@@ -30,7 +30,7 @@ namespace API.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterUserRequest request)
+        public async Task<ActionResult<ServiceResponse>> Register([FromBody] RegisterUserRequest request)
         {
             var command = new RegisterUserCommand
             {
@@ -42,7 +42,7 @@ namespace API.Controllers
             };
 
             var result = await _mediator.Send(command);
-            return Ok(new { message = "Registration successful." });
+            return Ok(new ServiceResponse(true, "User Registration Successful", result));
         }
     }
 }

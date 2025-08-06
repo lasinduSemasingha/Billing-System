@@ -10,7 +10,6 @@ namespace Application.DTOs
     public class RegisterUserRequest
     {
         [Required(ErrorMessage = "First name is required.")]
-        [RegularExpression(@"^[a-zA-Z]{1,200}$", ErrorMessage = "Name must be between 1 and 200 characters and contain only letters.")]
         public required string Name { get; set; }
         public required string Username { get; set; }
 
@@ -25,7 +24,6 @@ namespace Application.DTOs
         public required string Password { get; set; }
 
         [Required(ErrorMessage = "Phone number is necessary")]
-        [RegularExpression(@"^[\d]{10}$")]
         public string PhoneNumber { get; set; }
     }
 }

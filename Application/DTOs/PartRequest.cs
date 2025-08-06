@@ -12,5 +12,7 @@ namespace Application.DTOs
         public string PartName { get; set; } = string.Empty;
         public decimal UnitPrice { get; set; }
         public string PartDescription { get; set; } = string.Empty;
+        public int StockQty { get; set; }
+        public int ReOrderLevel { get; set; }
     }
 }

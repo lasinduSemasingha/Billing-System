@@ -5,6 +5,7 @@ using Application.Interfaces.Part;
 using Application.Interfaces.Recommendation;
 using Application.Interfaces.Repository;
 using Application.Interfaces.Service;
+using Application.Interfaces.Stock;
 using Application.Interfaces.User;
 using Domain.Entities;
 using Infrastructure.Data;
@@ -35,6 +36,7 @@ builder.Services.AddScoped<IPartRepository, PartRepository>();
 builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
 builder.Services.AddScoped<IRecommendationRepository, RecommendationRepository>();
 builder.Services.AddScoped<IPartRepository, PartRepository>();
+builder.Services.AddScoped<IStockRepository, StockRepository>();
 
 // Register your services
 builder.Services.AddScoped<IRecommendationService, Application.Interfaces.Recommendation.RecommendationService>();
@@ -42,6 +44,7 @@ builder.Services.AddScoped<IInvoiceService, Application.Interfaces.Invoice.Invoi
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPartService, PartService>();
 builder.Services.AddScoped<IServiceService, ServiceService>();
+builder.Services.AddScoped<IStockService, StockService>();
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(LoginHandler).Assembly));
 builder.Services.AddEndpointsApiExplorer();

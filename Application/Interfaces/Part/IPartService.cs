@@ -1,14 +1,11 @@
 ﻿using Application.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DomainPart = Domain.Entities.Part;
 
 namespace Application.Interfaces.Part
 {
     public interface IPartService
     {
         Task<List<PartRequest>> GetAllPartsAsync();
+        Task<DomainPart> GetPartByIdAsync(int partId);
     }
 }

@@ -1,10 +1,6 @@
 ﻿using Application.DTOs;
+using DomainPart = Domain.Entities.Part;
 using Application.Interfaces.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Interfaces.Part
 {
@@ -26,10 +22,33 @@ namespace Application.Interfaces.Part
                 PartId = p.PartId,
                 PartName = p.PartName,
                 UnitPrice = p.UnitPrice,
+                StockQty = p.StockQty,
+                ReOrderLevel = p.ReOrderLevel,
                 PartDescription = p.PartDescription
             }).ToList();
 
             return partDtos;
+        }
+        public async Task<DomainPart> GetPartByIdAsync(int partId)
+        {
+            var part = await _partRepository.GetPartByIdAsync(partId);
+
+            if (part == null)
+            {
+                throw new KeyNotFoundException($"Part with ID {partId} was not found.");
+            }
+
+            var partDto = new DomainPart
+            {
+                PartId = part.PartId,
+                PartName = part.PartName,
+                UnitPrice = part.UnitPrice,
+                Description = part.Description,
+                StockQty = part.StockQty,
+                ReorderLevel = part.ReorderLevel
+            };
+
+            return partDto;
         }
     }
 }

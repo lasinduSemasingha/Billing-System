@@ -1,16 +1,14 @@
 ﻿using Application.DTOs;
-using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DomainPart = Domain.Entities.Part;
 
 namespace Application.Interfaces.Repository
 {
     public interface IPartRepository
     {
-        Task<Domain.Entities.Part> GetPartByIdAsync(int partId);
+        Task<DomainPart> GetPartByIdAsync(int partId);
         Task<List<PartRequest>> GetAllPartsAsync();
+        Task AddingPartsAsync(DomainPart part);
+        Task DeletePartsById(int partId);
+        Task UpdatePartsAsync(IEnumerable<DomainPart> parts);
     }
 }

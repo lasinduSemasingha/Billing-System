@@ -28,5 +28,20 @@ namespace API.Controllers
 
             return Ok(new ServiceResponse(true,"Parts Got Successfully", parts));
         }
+
+        [HttpGet("Part")]
+        public async Task<ActionResult<ServiceResponse>> GetPartById(int partId)
+        {
+            try
+            {
+                var part = await _partService.GetPartByIdAsync(partId);
+                return Ok(new ServiceResponse(true, $"Part Found for id {partId}", part));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
+        }
     }
 }

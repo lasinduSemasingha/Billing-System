@@ -9,6 +9,6 @@ namespace Application.Interfaces.Repository
 {
     public interface IStockRepository
     {
-        Task<ServiceResponse> GetAll();
+        Task<StockSummaryDto> GetStockSummaryAsync();
     }
 }
