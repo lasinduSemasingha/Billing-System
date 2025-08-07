@@ -1,5 +1,6 @@
 ﻿using Application.DTOs;
 using Application.Interfaces.Part;
+using Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -42,6 +43,19 @@ namespace API.Controllers
                 return BadRequest(ex.Message);
             }
             
+        }
+        [HttpPost]
+        public async Task<ActionResult<ServiceResponse>> Create([FromBody] CreatePartRequest part)
+        {
+            try
+            {
+                var createdPart = await _partService.CreatePartAsync(part);
+                return Ok(new ServiceResponse(true, $"Part created successfully", createdPart));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

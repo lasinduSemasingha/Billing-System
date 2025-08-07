@@ -7,7 +7,7 @@ namespace Application.Interfaces.Repository
     {
         Task<DomainPart> GetPartByIdAsync(int partId);
         Task<List<PartRequest>> GetAllPartsAsync();
-        Task AddingPartsAsync(DomainPart part);
+        Task<DomainPart> AddAsync(DomainPart part);
         Task DeletePartsById(int partId);
         Task UpdatePartsAsync(IEnumerable<DomainPart> parts);
     }

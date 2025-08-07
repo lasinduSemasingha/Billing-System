@@ -7,5 +7,6 @@ namespace Application.Interfaces.Part
     {
         Task<List<PartRequest>> GetAllPartsAsync();
         Task<DomainPart> GetPartByIdAsync(int partId);
+        Task<DomainPart> CreatePartAsync(CreatePartRequest request);
     }
 }

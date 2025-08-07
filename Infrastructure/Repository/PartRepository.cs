@@ -84,5 +84,11 @@ namespace Infrastructure.Repository
             _context.Parts.Update(part);
             await _context.SaveChangesAsync();
         }
+        public async Task<Part> AddAsync(Part part)
+        {
+            _context.Parts.Add(part);
+            await _context.SaveChangesAsync();
+            return part;
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Application.DTOs;
 using DomainPart = Domain.Entities.Part;
 using Application.Interfaces.Repository;
+using Domain.Entities;
 
 namespace Application.Interfaces.Part
 {
@@ -49,6 +50,20 @@ namespace Application.Interfaces.Part
             };
 
             return partDto;
+        }
+        public async Task<DomainPart> CreatePartAsync(CreatePartRequest request)
+        {
+            var partDto = new DomainPart
+            {
+                PartName = request.PartName,
+                Description = request.PartDescription,
+                UnitPrice = request.UnitPrice,
+                StockQty = request.StockQty,
+                ReorderLevel = request.ReOrderLevel
+
+            };
+            var created = await _partRepository.AddAsync(partDto);
+            return created;
         }
     }
 }
