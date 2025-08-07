@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Application.DTOs;
 using Application.Interfaces.Invoice;
+using Domain.Entities;
 
 namespace API.Controllers
 {
@@ -158,6 +159,58 @@ namespace API.Controllers
 
             return Ok(invoice);
         }
+        [HttpGet("GetAllInvoices")]
+        public async Task<ActionResult<ServiceResponse>> GetAllInvoices()
+        {
+            try
+            {
+                var invoices = await _invoiceService.GetAllInvoices();
+                return Ok(new
+                ServiceResponse
+                (
+                    true,
+                    "Invoices retrieved successfully.",
+                    invoices
+                ));
+            }
+            catch (Exception ex)
+            {
+                // You can log the exception here if needed
+                return StatusCode(500, new
+                ServiceResponse
+                (
+                    false,
+                    ex.Message,
+                    null
+                ));
+            }
+        }
+        [HttpGet("SoldPartsCount")]
+        public async Task<IActionResult> GetAllSoldParts()
+        {
+            try
+            {
+                int partsCount = await _invoiceService.GetPartsCount();
+                return Ok(new { count = partsCount });
+            }
+            catch (Exception ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+        }
 
+        [HttpGet("SoldServiceCount")]
+        public async Task<IActionResult> GetAllSoldServices()
+        {
+            try
+            {
+                int servicesCount = await _invoiceService.GetServiceCount();
+                return Ok(new { count = servicesCount });
+            }
+            catch (Exception ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+        }
     }
 }

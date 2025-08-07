@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.Repository;
+﻿using Application.DTOs;
+using Application.Interfaces.Repository;
 
 namespace Application.Interfaces.Invoice
 {
@@ -134,6 +135,27 @@ namespace Application.Interfaces.Invoice
 
             int nextNumber = lastNumber + 1;
             return $"INV-{nextNumber:D5}";
+        }
+        public async Task<List<InvoiceRequest>> GetAllInvoices()
+        {
+            return await _invoiceRepository.GetAllInvoices();
+        }
+        public async Task<int> GetPartsCount()
+        {
+            return await _invoiceRepository.GetPartsCount();
+        }
+        public async Task<int> GetServiceCount()
+        {
+            return await _invoiceRepository.GetServiceCount();
+        }
+        public Task<List<InvoiceReportDto>> GetInvoiceReportsAsync()
+        {
+            return _invoiceRepository.GetAllInvoiceReportsAsync();
+        }
+
+        public Task<InvoiceReportDto> GetInvoiceReportAsync(int invoiceId)
+        {
+            return _invoiceRepository.GetInvoiceReportByIdAsync(invoiceId);
         }
 
     }

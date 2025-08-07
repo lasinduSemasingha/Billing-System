@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.DTOs;
 using Domain.Entities;
 namespace Application.Interfaces.Invoice
 {
@@ -17,6 +18,11 @@ namespace Application.Interfaces.Invoice
         Task SubmitInvoiceAsync(int invoiceId);
 
         Task<Domain.Entities.Invoice> GetInvoiceAsync(int invoiceId);
+        Task<List<InvoiceRequest>> GetAllInvoices();
+        Task<int> GetPartsCount();
+        Task<int> GetServiceCount();
+        Task<List<InvoiceReportDto>> GetInvoiceReportsAsync();
+        Task<InvoiceReportDto> GetInvoiceReportAsync(int invoiceId);
 
     }
 }
