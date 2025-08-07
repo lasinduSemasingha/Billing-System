@@ -11,5 +11,6 @@ namespace Application.Interfaces.Service
     {
         //Task<Domain.Entities.Service> GetServiceByIdAsync(int serviceId);
         Task<List<ServiceRequest>> GetAllServicesAsync();
+        Task<CreateServiceRequest> CreateService(CreateServiceRequest request);
     }
 }

@@ -29,5 +29,18 @@ namespace API.Controllers
 
             return Ok(new ServiceResponse(true, "Parts Got Successfully", services));
         }
+        [HttpPost]
+        public async Task<ActionResult<ServiceResponse>> CreateService([FromBody] CreateServiceRequest request)
+        {
+            try
+            {
+                var service = await _serviceService.CreateService(request);
+                return Ok(new ServiceResponse(true, "Service created successfully", service));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ServiceResponse(false, ex.Message, null));
+            }
+        }
     }
 }

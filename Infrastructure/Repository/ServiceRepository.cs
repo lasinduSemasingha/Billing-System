@@ -20,6 +20,13 @@ namespace Infrastructure.Repository
             _context = context;
         }
 
+        public async Task<Service> CreateService(Service service)
+        {
+            _context.Services.Add(service);
+            await _context.SaveChangesAsync();
+            return service;
+        }
+
         public async Task<Service> GetServiceByIdAsync(int serviceId)
         {
             return await _context.Services.FirstOrDefaultAsync(p => p.ServiceId == serviceId);

@@ -1,10 +1,5 @@
 ﻿using Application.DTOs;
-using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ServiceDomain = Domain.Entities.Service;
 
 namespace Application.Interfaces.Repository
 {
@@ -12,5 +7,6 @@ namespace Application.Interfaces.Repository
     {
         Task<Domain.Entities.Service> GetServiceByIdAsync(int serviceId);
         Task<List<ServiceRequest>> GetAllServicesAsync();
+        Task<ServiceDomain> CreateService(ServiceDomain service);
     }
 }

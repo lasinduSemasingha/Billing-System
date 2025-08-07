@@ -1,10 +1,6 @@
 ﻿using Application.DTOs;
 using Application.Interfaces.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DomainService = Domain.Entities.Service;
 
 namespace Application.Interfaces.Service
 {
@@ -28,6 +24,19 @@ namespace Application.Interfaces.Service
             }).ToList();
 
             return serviceDtos;
+        }
+
+        public async Task<CreateServiceRequest> CreateService(CreateServiceRequest request)
+        {
+            var service = new DomainService
+            {
+                ServiceName = request.ServiceName,
+                ServiceDescription = request.ServiceDescription,
+                BasePrice = request.BasePrice
+            };
+
+            var requestService = await _serviceRepository.CreateService(service);
+            return request;
         }
     }
 }
