@@ -9,14 +9,11 @@ using Application.Interfaces.Service;
 using Application.Interfaces.Stock;
 using Application.Interfaces.User;
 using Application.Interfaces.Vehicle;
-using Domain.Entities;
 using Infrastructure.Data;
 using Infrastructure.Repository;
 using Infrastructure.Repository.User;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Swashbuckle.AspNetCore;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -26,7 +23,7 @@ builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-        options.JsonSerializerOptions.MaxDepth = 64; // increase depth if needed
+        options.JsonSerializerOptions.MaxDepth = 64;
     });
 builder.Services.AddOpenApi();
 
@@ -42,7 +39,6 @@ builder.Services.AddScoped<IStockRepository, StockRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IVehicleRepository, VehiclRepository>();
 
-// Register your services
 builder.Services.AddScoped<IRecommendationService, Application.Interfaces.Recommendation.RecommendationService>();
 builder.Services.AddScoped<IInvoiceService, Application.Interfaces.Invoice.InvoiceService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
@@ -92,7 +88,7 @@ if (app.Environment.IsDevelopment())
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Garage Billing System");
 });
 
 app.UseCors("AllowAll");
