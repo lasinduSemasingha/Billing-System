@@ -9,6 +9,7 @@ namespace Application.DTOs
     public class ServiceRequest
     {
         public int ServiceId { get; set; }
+        public decimal Price { get; set; }
         public string ServiceName { get; set; } = string.Empty;
         public string ServiceDescription { get; set; } = string.Empty;
     }

@@ -1,5 +1,6 @@
 ﻿using Application.DTOs;
 using Application.Interfaces.Repository;
+using Domain.Entities;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -33,6 +34,24 @@ namespace Infrastructure.Repository
                 })
                 .ToListAsync();
         }
+        public async Task<Domain.Entities.Vehicle> AddAsync(Domain.Entities.Vehicle vehicle)
+        {
+            await _appDbContext.Vehicles.AddAsync(vehicle);
+            _appDbContext.SaveChanges();
+            return vehicle;
+        }
+        public async Task<Domain.Entities.Vehicle> GetByIdAsync(int id)
+        {
+            var result = await _appDbContext.Vehicles.FirstOrDefaultAsync(v => v.VehicleId == id);
+            return result;
+        }
 
+        public async Task<VehicleOwner?> GetCustomerByVehicleIdAsync(int vehicleId)
+        {
+            return await _appDbContext.Vehicles
+                .Where(v => v.VehicleId == vehicleId)
+                .Select(v => v.VehicleOwner)  // assuming Vehicle → Customer navigation
+                .FirstOrDefaultAsync();
+        }
     }
 }

@@ -2,6 +2,8 @@ using Application.Commands.Auth;
 using Application.Interfaces.Auth;
 using Application.Interfaces.Customer;
 using Application.Interfaces.Invoice;
+using Application.Interfaces.JobCard;
+using Application.Interfaces.Mechanic;
 using Application.Interfaces.Part;
 using Application.Interfaces.Recommendation;
 using Application.Interfaces.Repository;
@@ -38,6 +40,8 @@ builder.Services.AddScoped<IPartRepository, PartRepository>();
 builder.Services.AddScoped<IStockRepository, StockRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IVehicleRepository, VehiclRepository>();
+builder.Services.AddScoped<IMechanicRepository, MechanicRepository>();
+builder.Services.AddScoped<IJobCardRepository, JobCardRepository>();
 
 builder.Services.AddScoped<IRecommendationService, Application.Interfaces.Recommendation.RecommendationService>();
 builder.Services.AddScoped<IInvoiceService, Application.Interfaces.Invoice.InvoiceService>();
@@ -47,6 +51,8 @@ builder.Services.AddScoped<IServiceService, ServiceService>();
 builder.Services.AddScoped<IStockService, StockService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IVehicleService, VehicleService>();
+builder.Services.AddScoped<IMechanicService, MechanicService>();
+builder.Services.AddScoped<IJobCardService, JobCardService>();
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(LoginHandler).Assembly));
 builder.Services.AddEndpointsApiExplorer();
@@ -54,12 +60,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy =>
-    {
+    options.AddDefaultPolicy(policy =>
         policy.AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader();
-    });
+              .AllowAnyHeader()
+              .AllowAnyMethod());
 });
 
 builder.Services.AddAuthentication("Bearer")
@@ -91,7 +95,7 @@ app.UseSwaggerUI(c =>
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Garage Billing System");
 });
 
-app.UseCors("AllowAll");
+app.UseCors();
 
 app.UseHttpsRedirection();
 

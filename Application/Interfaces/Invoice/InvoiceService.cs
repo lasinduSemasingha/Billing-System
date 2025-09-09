@@ -75,7 +75,7 @@ namespace Application.Interfaces.Invoice
             if (part == null) throw new Exception("Part not found");
 
             if (part.StockQty < quantity)
-                throw new InvalidOperationException("Not enough stock available");
+                throw new Exception("Not enough stock available");
 
             part.StockQty -= quantity;
 
@@ -93,6 +93,55 @@ namespace Application.Interfaces.Invoice
 
             await _invoiceRepository.SaveChangesAsync();
         }
+
+        public async Task AddManualPartToInvoiceAsync(int invoiceId, string manualPartName, int quantity, decimal unitPrice)
+        {
+            if (string.IsNullOrWhiteSpace(manualPartName))
+                throw new Exception("Manual part name cannot be empty");
+
+            var invoice = await _invoiceRepository.GetInvoiceWithItemsAsync(invoiceId);
+            if (invoice == null)
+                throw new Exception("Invoice not found");
+
+            var manualPart = new Domain.Entities.ManualInvoicePart
+            {
+                InvoiceId = invoiceId,
+                Name = manualPartName,
+                Quantity = quantity,
+                UnitPrice = unitPrice
+            };
+
+            invoice.ManualInvoiceParts.Add(manualPart);
+
+            UpdateTotalAmount(invoice);
+
+            await _invoiceRepository.SaveChangesAsync();
+        }
+
+        public async Task AddManualServiceToInvoiceAsync(int invoiceId, string manualServiceName, int quantity, decimal unitPrice)
+        {
+            if (string.IsNullOrWhiteSpace(manualServiceName))
+                throw new Exception("Manual part name cannot be empty");
+
+            var invoice = await _invoiceRepository.GetInvoiceWithItemsAsync(invoiceId);
+            if (invoice == null)
+                throw new Exception("Invoice not found");
+
+            var manualService = new Domain.Entities.ManualInvoiceService
+            {
+                InvoiceId = invoiceId,
+                ServiceName = manualServiceName,
+                Quantity = quantity,
+                Price = unitPrice
+            };
+
+            invoice.ManualInvoiceServices.Add(manualService);
+
+            UpdateTotalAmount(invoice);
+
+            await _invoiceRepository.SaveChangesAsync();
+        }
+
 
         public async Task SubmitInvoiceAsync(int invoiceId)
         {

@@ -20,5 +20,8 @@ namespace Domain.Entities
         public Vehicle Vehicle { get; set; }
         public ICollection<InvoiceService> InvoiceServices { get; set; }
         public ICollection<InvoicePart> InvoiceParts { get; set; }
+        public ICollection<ManualPart> ManualParts { get; set; } = new List<ManualPart>();
+        public ICollection<ManualInvoicePart> ManualInvoiceParts { get; set; } = new List<ManualInvoicePart>();
+        public ICollection<ManualInvoiceService> ManualInvoiceServices { get; set; } = new List<ManualInvoiceService>();
     }
 }

@@ -14,5 +14,6 @@ namespace Domain.Entities
         public int StockQty { get; set; }
         public int ReorderLevel { get; set; }
         public ICollection<InvoicePart> InvoiceParts { get; set; }
+        public ICollection<JobCardPart> JobCardParts { get; set; } = new List<JobCardPart>();
     }
 }

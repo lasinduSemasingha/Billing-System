@@ -14,6 +14,8 @@ namespace Application.Interfaces.Invoice
         Task AddServiceToInvoiceAsync(int invoiceId, int serviceId, int quantity, decimal price);
 
         Task AddPartToInvoiceAsync(int invoiceId, int partId, int quantity, decimal unitPrice);
+        Task AddManualPartToInvoiceAsync(int invoiceId, string manualPartName, int quantity, decimal unitPrice);
+        Task AddManualServiceToInvoiceAsync(int invoiceId, string manualServiceName, int quantity, decimal unitPrice);
 
         Task SubmitInvoiceAsync(int invoiceId);
 

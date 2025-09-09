@@ -1,15 +1,14 @@
 ﻿using Application.DTOs;
-using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Interfaces.Auth
+namespace Application.Interfaces.Mechanic
 {
-    public interface IAuthService
+    public interface IMechanicService
     {
-        string GenerateJwtToken(Domain.Entities.User? user);
+        Task<List<MechanicDetailsRequest>> GetMechanicDetails();
     }
 }

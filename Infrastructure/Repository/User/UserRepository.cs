@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Application.DTOs;
+using Application.Interfaces.User;
+using Domain.Entities;
+using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Domain.Entities;
-using Infrastructure.Data;
-using Application.Interfaces.User;
-using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository.User
 {
@@ -30,5 +31,6 @@ namespace Infrastructure.Repository.User
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
         }
+        
     }
 }

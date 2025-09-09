@@ -20,6 +20,7 @@ namespace Application.Interfaces.Service
             {
                 ServiceId = s.ServiceId,
                 ServiceName = s.ServiceName,
+                Price = s.Price,
                 ServiceDescription = s.ServiceDescription
             }).ToList();
 

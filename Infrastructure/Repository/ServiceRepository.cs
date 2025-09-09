@@ -39,9 +39,14 @@ namespace Infrastructure.Repository
                 {
                     ServiceId = p.ServiceId,
                     ServiceName = p.ServiceName,
+                    Price = p.BasePrice,
                     ServiceDescription = p.ServiceDescription
                 })
                 .ToListAsync();
+        }
+        public async Task AddAsync(ManualService manualService)
+        {
+            await _context.ManualServices.AddAsync(manualService);
         }
     }
 }

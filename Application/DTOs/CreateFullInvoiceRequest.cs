@@ -22,6 +22,7 @@ namespace Application.DTOs
     public class InvoicePartDto
     {
         public int PartId { get; set; }
+        public string? ManualPartName { get; set; }
         public int Quantity { get; set; }
         public decimal UnitPrice { get; set; }
     }
@@ -29,6 +30,7 @@ namespace Application.DTOs
     public class InvoiceServiceDto
     {
         public int ServiceId { get; set; }
+        public string? ManualServiceName { get; set; }
         public int Quantity { get; set; }
         public decimal Price { get; set; }
     }

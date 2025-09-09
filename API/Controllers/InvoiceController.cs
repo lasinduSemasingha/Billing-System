@@ -145,20 +145,49 @@ namespace API.Controllers
         [HttpPost("create-full")]
         public async Task<IActionResult> CreateFullInvoice([FromBody] CreateFullInvoiceRequest request)
         {
-            var invoice = await _invoiceService.CreateInvoiceAsync(request.VehicleId, request.DateIssued, request.PaidStatus, request.TotalPrice, request.VatAmount, request.Notes);
+            // 1️⃣ Create the invoice
+            var invoice = await _invoiceService.CreateInvoiceAsync(
+                request.VehicleId,
+                request.DateIssued,
+                request.PaidStatus,
+                request.TotalPrice,
+                request.VatAmount,
+                request.Notes
+            );
 
+            // 2️⃣ Add parts (stock or manual)
             foreach (var part in request.Parts)
             {
-                await _invoiceService.AddPartToInvoiceAsync(invoice.InvoiceId, part.PartId, part.Quantity, part.UnitPrice);
+                if (part.PartId > 0)
+                {
+                    // Stock part
+                    await _invoiceService.AddPartToInvoiceAsync(invoice.InvoiceId, part.PartId, part.Quantity, part.UnitPrice);
+                }
+                else if (!string.IsNullOrWhiteSpace(part.ManualPartName))
+                {
+                    // Manual part
+                    await _invoiceService.AddManualPartToInvoiceAsync(invoice.InvoiceId, part.ManualPartName, part.Quantity, part.UnitPrice);
+                }
             }
 
+            // 3️⃣ Add services
             foreach (var service in request.Services)
             {
-                await _invoiceService.AddServiceToInvoiceAsync(invoice.InvoiceId, service.ServiceId, service.Quantity, service.Price);
+                if (service.ServiceId > 0)
+                {
+                    await _invoiceService.AddServiceToInvoiceAsync(invoice.InvoiceId, service.ServiceId, service.Quantity, service.Price);
+                }
+                else if (!string.IsNullOrWhiteSpace(service.ManualServiceName))
+                {
+                    await _invoiceService.AddManualServiceToInvoiceAsync(invoice.InvoiceId, service.ManualServiceName, service.Quantity, service.Price);
+                }
             }
 
+            // 4️⃣ Return the created invoice
             return Ok(invoice);
         }
+
+
         [HttpGet("GetAllInvoices")]
         public async Task<ActionResult<ServiceResponse>> GetAllInvoices()
         {

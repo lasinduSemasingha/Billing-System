@@ -90,5 +90,9 @@ namespace Infrastructure.Repository
             await _context.SaveChangesAsync();
             return part;
         }
+        public async Task AddAsync(ManualPart manualPart)
+        {
+            await _context.ManualParts.AddAsync(manualPart);
+        }
     }
 }

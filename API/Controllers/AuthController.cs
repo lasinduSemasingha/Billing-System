@@ -1,5 +1,6 @@
 ﻿using Application.Commands.Auth;
 using Application.DTOs;
+using Application.Interfaces.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
